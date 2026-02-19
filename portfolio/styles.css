@@ -1,0 +1,173 @@
+/*
+  styles.css — Styles for Saravanan A portfolio
+  - Uses CSS variables for theme (light/dark)
+  - Responsive layout with grid/flex
+  - Simple animations and hover effects
+*/
+
+:root{
+  /* Purple gradient palette */
+  --g1: #6A0DAD; /* deep purple */
+  --g2: #9D4EDD; /* violet */
+  --g3: #C77DFF; /* soft magenta */
+
+  --bg: #06040a; /* deep dark */
+  --surface: rgba(255,255,255,0.03);
+  --glass: rgba(255,255,255,0.04);
+  --text: #eaf6ff;
+  --muted: #aab7cf;
+  --primary: var(--g2);
+  --neon: rgba(167,84,255,0.25);
+  --radius:16px;
+  --shadow: 0 20px 50px rgba(6,4,10,0.6);
+}
+
+[data-theme="light"]{
+  --bg:#f7f8fb; --text:#081422; --muted:#4b5563; --surface: rgba(6,4,10,0.02);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:Montserrat, Poppins, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+  background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+.container{max-width:1100px;margin:0 auto;padding:1.5rem}
+
+/* Header */
+.site-header{backdrop-filter: blur(8px);position:sticky;top:0;z-index:60;background:linear-gradient(180deg, rgba(6,4,10,0.25), rgba(6,4,10,0.15));border-bottom:1px solid rgba(255,255,255,0.03)}
+.site-header:focus-within{outline:2px solid rgba(167,84,255,0.06)}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;color:var(--text);text-decoration:none;font-family:Poppins, sans-serif;letter-spacing:0.2px}
+.nav{display:flex;gap:1rem}
+.nav a{color:var(--muted);text-decoration:none;padding:0.5rem 0.7rem;border-radius:10px;border:1px solid transparent;transition:all .18s ease}
+.nav a:hover{color:var(--text);background:linear-gradient(90deg, rgba(157,78,221,0.06), rgba(199,125,255,0.04));box-shadow:0 6px 18px rgba(105,13,173,0.06)}
+.actions{display:flex;gap:0.6rem;align-items:center}
+#theme-toggle{background:transparent;border:1px solid var(--glass);padding:0.45rem;border-radius:10px;cursor:pointer}
+.cta{background:transparent;border:1px solid var(--primary);padding:0.45rem 0.8rem;border-radius:8px;color:var(--primary);cursor:pointer}
+
+/* Hero */
+.hero{padding:5rem 0 6rem;position:relative;overflow:visible}
+.hero-grid{display:grid;grid-template-columns:1fr 420px;gap:2.4rem;align-items:center}
+.hero h1{font-size:3.2rem;margin:0;font-weight:800}
+.sub{color:var(--muted);margin-top:0.25rem;font-weight:600}
+.tagline{margin:1rem 0;color:var(--muted);max-width:60ch}
+.hero-cta .btn{margin-right:0.8rem}
+
+/* animated gradient background behind hero */
+.bg-animated{position:absolute;inset:0;pointer-events:none;z-index:0;filter:blur(60px);opacity:0.9;background:linear-gradient(120deg,var(--g1),var(--g2),var(--g3));background-size:300% 300%;animation:shift 12s linear infinite;mix-blend-mode:screen}
+
+@keyframes shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* Hero illustration - floating 3D "card" */
+.hero-illustration{display:flex;align-items:center;justify-content:center;transform-style:preserve-3d;perspective:1200px;z-index:6}
+.float-card{
+  width:280px;height:280px;border-radius:50%;
+  background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 30px 90px rgba(104,13,173,0.18);
+  display:flex;align-items:center;justify-content:center;transform:translateZ(0);
+  transition:transform .45s cubic-bezier(.2,.9,.22,1), box-shadow .45s ease;
+  border:1px solid rgba(167,84,255,0.12);overflow:hidden;position:relative
+}
+.profile-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;transform-origin:center center;transition:transform .5s ease, box-shadow .45s ease}
+.face{font-family:monospace;font-size:3.4rem;color:rgba(250,250,255,0.92)}
+.float-card::after{content:'';position:absolute;inset:auto auto -20% -20%;width:120%;height:140px;background:radial-gradient(circle at 50% 0%, rgba(157,78,221,0.12), transparent 40%);filter:blur(30px);z-index:-1}
+
+/* idle floating animation */
+@keyframes floatIdle{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+/* .float-card.is-idle{animation:floatIdle 6s ease-in-out infinite} */
+
+/* profile hover shadow for depth */
+.float-card:hover{box-shadow:0 50px 140px rgba(106,13,173,0.24)}
+
+/* animated gradient text for name */
+.gradient-text{background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3));background-size:200% 200%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shift 6s linear infinite}
+
+/* theme transition smoothing */
+body, .card, .btn, .float-card, .site-header{transition:background-color .45s ease,color .45s ease,box-shadow .45s ease,border-color .45s ease}
+
+
+/* Glow CTA */
+.glow{box-shadow:0 6px 30px rgba(157,78,221,0.18), 0 2px 8px rgba(199,125,255,0.06)}
+.btn-primary{background:linear-gradient(90deg,var(--g2),var(--g3));color:white;text-shadow:0 2px 8px rgba(106,13,173,0.2);border:none}
+.btn-outline{border:1px solid rgba(255,255,255,0.04);color:var(--text);background:transparent}
+
+/* Sections */
+section{padding:2.5rem 0}
+h2{margin:0 0 0.5rem 0}
+.lead{color:var(--muted);margin-bottom:1rem}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.skills-list{list-style:none;padding:0;margin:0}
+
+/* Projects */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;z-index:3}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:1.2rem;box-shadow:0 12px 40px rgba(2,0,8,0.6);transition:transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;transform-style:preserve-3d;border:1px solid rgba(167,84,255,0.06);backdrop-filter: blur(8px);position:relative;overflow:visible}
+.card:hover{transform:translateY(-10px) rotateX(3deg) rotateY(2deg) scale(1.05);box-shadow:0 40px 100px rgba(106,13,173,0.15);filter:brightness(1.02)}
+.card::after{content:'';position:absolute;inset:-2px;border-radius:20px;padding:2px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3));opacity:0;transition:opacity .28s ease;z-index:-1}
+.card:hover::after{opacity:1;filter:blur(10px)}
+.card h3{margin-top:0;font-weight:700}
+
+/* Neon border glow on hover for interactive depth */
+.card .btn-outline{border:1px solid rgba(255,255,255,0.06)}
+.card:hover .btn-outline{box-shadow:0 6px 28px rgba(157,78,221,0.14);border-color:rgba(199,125,255,0.6)}
+.card h3{margin-top:0}
+.tech{color:var(--muted);font-size:0.95rem}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.skill{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:0.9rem;border-radius:12px;border:1px solid rgba(255,255,255,0.03);backdrop-filter:blur(6px)}
+.skill-header{display:flex;justify-content:space-between;font-weight:600;margin-bottom:0.5rem}
+.progress{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));height:12px;border-radius:999px;overflow:hidden}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--g2),var(--g3));width:0;transition:width 1.1s cubic-bezier(.2,.9,.22,1)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:2rem}
+form{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:1rem;border-radius:12px;box-shadow:0 18px 50px rgba(2,0,8,0.5);border:1px solid rgba(255,255,255,0.03)}
+label{display:block;margin-top:0.6rem;font-size:0.9rem}
+input,textarea{width:100%;padding:0.6rem;border-radius:8px;border:1px solid rgba(0,0,0,0.06);margin-top:0.2rem;background:transparent;color:var(--text)}
+.form-actions{margin-top:0.8rem}
+.form-status{margin-top:0.6rem;color:var(--muted)}
+
+/* Footer */
+.site-footer{padding:1rem 0;border-top:1px solid rgba(0,0,0,0.04);margin-top:2rem}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+
+/* Buttons */
+.btn{display:inline-block;padding:0.6rem 0.9rem;border-radius:12px;text-decoration:none;font-weight:600}
+.btn-primary{background:linear-gradient(90deg,var(--g2),var(--g3));color:white}
+.btn-outline{border:1px solid rgba(255,255,255,0.04);color:var(--text);background:transparent}
+
+/* Responsive */
+@media (max-width:1100px){
+  .hero-grid{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .nav{display:none}
+  .projects-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.4rem}
+  .float-card{width:200px;height:200px;border-radius:50%}
+}
+
+/* disable heavy transforms on small / touch devices */
+@media (hover: none) and (pointer: coarse){
+  .float-card{transform:none!important;animation:floatIdle 6s ease-in-out infinite}
+}
+
+/* Small animation trigger class */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.9,.22,1), transform .8s cubic-bezier(.2,.9,.22,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* Progress bars read from inline style --val set to percent */
+.progress > div{width:var(--val, 0%)}
+
+/* subtle page transition */
+.page-fade{opacity:0;transform:translateY(6px);transition:opacity .45s ease, transform .45s ease}
+.page-fade.visible{opacity:1;transform:none}
+
